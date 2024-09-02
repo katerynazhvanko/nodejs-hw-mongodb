@@ -9,7 +9,7 @@
     "dev": "nodemon src/index.js"
   },
   "keywords": [],
-  "author": "",
+  "author": "katerynazhvanko",
   "license": "ISC",
   "description": "project-backend",
   "devDependencies": {
