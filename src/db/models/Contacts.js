@@ -21,14 +21,6 @@ const contactSchema = new Schema(
       default: 'personal',
       required: true,
     },
-    createdAt: {
-      type: String,
-      required: true,
-    },
-    updatedAt: {
-      type: String,
-      required: true,
-    },
   },
   { versionKey: false, timestamps: true },
 );
