@@ -38,16 +38,48 @@ export const createContactController = async (req, res) => {
 
 export const upsertContactController = async (req, res) => {
   const { contactId } = req.params;
-  const data = await contactServices.upsertContact(
+  const { isNew, data } = await contactServices.updateContact(
     { _id: contactId },
     req.body,
+    { upsert: true },
   );
+
+  const status = isNew ? 201 : 200;
 
   console.log('req.body', req.body);
 
   res.json({
-    status: 200,
+    status,
     message: 'Contact was upserted successfully',
     data,
   });
+};
+
+export const patchContactController = async (req, res) => {
+  const { contactId } = req.params;
+  const result = await contactServices.updateContact(
+    { _id: contactId },
+    req.body,
+  );
+
+  if (!result) {
+    throw createHttpError(404, 'Contact not found');
+  }
+
+  res.json({
+    status: 200,
+    message: 'Contact was upserted successfully',
+    data: result.data,
+  });
+};
+
+export const deleteContactController = async (res, req) => {
+  const { contactId } = req.params;
+  const { data } = await contactServices.deleteContact(contactId);
+
+  if (!data) {
+    throw createHttpError(404, 'Contact not found');
+  }
+
+  res.status(204).send();
 };
